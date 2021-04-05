@@ -1,0 +1,98 @@
+﻿<!-- Δημιουργία: Νικόλαος-Νικήτας 
+---	Μια ιστοσελίδα ηλεκτρονικής βιβλιοθήκης 
+--- Με Responsive, Mobile-First Design
+
+--- Με Python 3, Flask, HTML5, CSS3, Bootstrap, JavaScript, JQuery
+---	** e-Library **
+---	Made by Nikos-Nikitas. GitHub: nikosnikitas 
+
+				- - - > Client Side < - - -
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<!-- Το κάνουμε Responsive για να ανταποκρίνεται σε διάφορες οθόνες -->
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- Το Bootstrap CSS Framework μας δίνει τις κλάσεις για να έχουμε μια σελίδα με στυλ -->
+<!-- Σε περίπτωση που χρειαστεί και η βιβλιοθήκη της JavaScript, η JQuery, αν προσθέσουμε κάτι -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>
+e-Library - Search
+</title>
+<script>
+/* 	Όταν φορτώσει η σελίδα στέλνει αίτημα και οι αλλαγές της νέας σελίδας 
+	φαίνοντται στο id που του δώσουμε αντί να αλλάξει σελίδα.
+*/
+function WhenLoad(pagename) {
+	const req = new XMLHttpRequest();
+	req.open('GET','/${pagename}');
+	req.onload = () => {
+	const res = req.resTxt;
+	document.querySelector('#search_results').innerHTML = res;
+	};
+	req.send;
+	}
+
+</script>
+<style>
+th {
+	text-align:center;
+} 
+
+a {
+    text-decoration:none; 
+    color:white;
+}
+
+a:hover {
+    color:white;
+    text-decoration: underline;
+}
+<!-- Μερικές επιπλέον μορφοποιήσεις για καλύτερη εμφάνιση -->
+</style>
+   </head>
+   <body style="text-align:center; background-image: url(https://images.pexels.com/photos/763135/pexels-photo-763135.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+	background-size:100%;">
+   <br/>
+   <label> <h1 style="color:white;"> e-Library <a href="{{ url_for('index') }}"> <br/> Back to Home </a> </h1> </label>
+   <br/>
+   <!-- Με το url_for ξεκινάμε τις συναρτήσεις από το back end μας -->
+   <form action="{{ url_for('Search') }}" method="POST" class="form-horizontal" name="myform">
+   <br/> 
+	<h1 style="color:white;"> Search </h1>
+   <br/>
+   <form action="{{ url_for('Search') }}" method="POST">
+   <input type="search" placeholder="Search for a book or an author. (Name must be exact)" name="search" class="form-control input-lg"/>
+   <br/>
+   <button class="btn" onsubmit="{{ url_for('Search') }}"> Search </button>
+   </form>
+   <br/>
+   <div id="search_results" class="table table-responsive">
+   <table style="border: 1px solid white; border-spacing:1px;" class="table table-hover">
+   <tr>
+   <th> <h1> Results </h1> </th>
+   </tr>
+	<tr>
+	<th> Books </th>
+	<th> Authors </th>
+	</tr>
+ {% for i in all_r %}    
+<tr> 
+<td> {{ i[0]|safe }} </td> 
+<td> {{ i[1]|safe }} </td>     
+</tr>
+   {% endfor %}   
+   </table>
+  </div>
+   <div class="panel-footer">
+   Δημιουργία: Νίκος-Νικήτας
+   </div>
+    <script>
+	 </script>
+   </body>
+   </html>
