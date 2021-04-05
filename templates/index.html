@@ -1,0 +1,116 @@
+﻿<!-- Δημιουργία: Νικόλαος-Νικήτας 
+---	Μια ιστοσελίδα ηλεκτρονικής βιβλιοθήκης 
+--- Με Responsive, Mobile-First Design
+
+--- Με Python 3, Flask, HTML5, CSS3, Bootstrap, JavaScript, JQuery
+---	** e-Library **
+---	Made by Nikos-Nikitas. GitHub: nikosnikitas 
+
+				- - - > Client Side < - - -
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<!-- Το κάνουμε Responsive για να ανταποκρίνεται σε διάφορες οθόνες -->
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- Το Bootstrap CSS Framework μας δίνει τις κλάσεις για να έχουμε μια σελίδα με στυλ -->
+<!-- Σε περίπτωση που χρειαστεί και η βιβλιοθήκη της JavaScript, η JQuery, αν προσθέσουμε κάτι -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+
+table {
+
+width:76%;
+margin:0%;
+padding:0%;
+vertical-align:center;
+text-align:center;
+
+}
+
+th {
+
+text-align:center;
+
+}
+a {
+    color:white; 
+    text-decoration:none;
+}
+a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+</style>
+<title>
+e-Library - Home
+</title>
+<script>
+/* 	Όταν φορτώσει η σελίδα στέλνει αίτημα και οι αλλαγές της νέας σελίδας 
+	φαίνοντται στο id που του δώσουμε αντί να αλλάξει σελίδα.
+*/
+function WhenLoad(pagename) {
+	const req = new XMLHttpRequest();
+	req.open('GET','/${pagename}');
+	req.onload = () => {
+	const res = req.resTxt;
+	document.querySelector('#myt').innerHTML = res;
+	};
+	req.send;
+	}
+
+</script>
+   </head>
+   <body style="text-align:center; background-image: url(https://images.pexels.com/photos/763135/pexels-photo-763135.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
+	background-size:100%;">
+   <label> <h1> <a style="text-decoration:none; color:white;" href="{{ url_for('index') }}">e-Library</a> </h1> </label>
+   <br/>
+   <form action="{{ url_for('Add') }}" method="POST" class="form-horizontal" name="myform">  
+   <input type="text" autofocus required class="form-control input-lg" name="title" placeholder="Title">
+   <br/>
+   <input type="text" class="form-control input-lg" name="author" placeholder="Author's Name"/>
+   <br/>
+	<button class="btn" onsubmit="{{ url_for('Add') }}">
+	Add Book
+	</button>
+   <input type="reset" value="Clear" class="btn"/>
+	<h2><a href="{{ url_for('Search') }}"> Click to Search </a></h2>
+	</form>	 
+   <h2 style="color:white;"> Number of books: {{numBooks}}</h2>
+   <br/>
+  <div class="table table-responsive">
+   <table id="myt" style="border: 1px solid white; border-spacing:1px;" class="table table-hover">
+   <tr>
+   <th> Book </th>
+   <th> Author </th>
+   </tr> 
+   <!-- Για κάθε βιβλίο και συγγραφέα στις λίστες φτιάχνει πίνακα με 2 στήλες -->
+ {% for i in books %}    
+ {% set book = books[loop.index-1] %}
+ {% set author = authors[loop.index-1]%}
+<tr> 
+<td> {{ book|safe }} </td> 
+<td> {{ author|safe }} </td>     
+</tr>
+   {% endfor %}   
+   </table>
+   </div>
+   <br/>
+   <div class="panel-footer">
+   Δημιουργία: Νίκος-Νικήτας
+   </div>
+	<script>
+/*	Μπορεί και η JavaScript να χρησιμοποιήσει τις μεταβλητές της Python
+	var b = "{{ data|safe }}" < - - - με ασφαλή τρόπο 
+	document.getElementById("myp").innerHTML= b;
+	ώστε να γίνουν διάφορες προσαρμογές/επεκτάσεις.
+*/
+    </script>
+   </body>
+   </html>
